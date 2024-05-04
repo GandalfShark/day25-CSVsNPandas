@@ -60,18 +60,10 @@ while game_on:
             continue
 
 
-missed_states = []
-for state_name in data.state:
-    if state_name in correct_answers:
-        pass
-    else:
-        missed_states.append(state_name)
+missed_states = [s for s in data.state if s not in correct_answers]
 
-tracking_dict = {
-    'state names forgotten': missed_states,
-    'state names remembered': correct_answers
-}
+tracking_dict = {'states forgotten': missed_states}
+# can't track both remembered and forgotten because the len must be the same here :(
 
 saved_data = pd.DataFrame.from_dict(tracking_dict)
 saved_data.to_csv('last_game.csv')
-
